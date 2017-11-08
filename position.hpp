@@ -1,5 +1,5 @@
-#ifndef POSITION_H
-#define POSITION_H
+#ifndef POSITION_HPP
+#define POSITION_HPP
 class Position
 {
 	public:
@@ -45,4 +45,4 @@ class Position
 	private:
 		int x, y;
 };
-#endif
+#endif // POSITION_HPP
