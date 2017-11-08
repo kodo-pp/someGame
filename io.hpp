@@ -1,5 +1,5 @@
-#ifndef IO_H
-#define IO_H
+#ifndef IO_HPP
+#define IO_HPP
 ;
 #include <ncurses.h>
 #include "position.hpp"
@@ -20,4 +20,4 @@ void putCharAt(int, Position);
 void swapBuffers();
 void onIoExit();
 static const int CLEAR_CHAR = ' ' | A_NORMAL;
-#endif
+#endif // IO_HPP

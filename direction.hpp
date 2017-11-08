@@ -7,4 +7,4 @@ enum Direction
 	DIR_DOWN,
 	DIR_RIGHT
 };
-#endif
+#endif // DIRECTION.hpp

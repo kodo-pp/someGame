@@ -21,4 +21,4 @@ template <class T> class Field
 Field <char> * getWallField();
 //Field getEntityField();
 
-#endif
+#endif // FIELD_HPP

@@ -1,3 +1,6 @@
+#ifndef ENTITY_HPP
+#define ENTITY_HPP
+
 #include "position.hpp"
 #include "direction.hpp"
 
@@ -18,3 +21,5 @@ class Entity
 		Position position;
 		int displayChar;
 };
+
+#endif // ENTITY_HPP
