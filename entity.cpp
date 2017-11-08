@@ -2,7 +2,6 @@
 #include "move.hpp"
 #include "field.hpp"
 #include "io.hpp"
-#include <fstream>
 
 /*
 class Entity
@@ -22,18 +21,13 @@ class Entity
 		int displayChar;
 };
 */
-std::ofstream efout;
 
 Entity::Entity(int _displayChar)
 {
 	setDisplayChar(_displayChar);
-	efout.open("efout.log");
 	position.setXY(0, 0);
 }
-Entity::~Entity()
-{
-	efout.close();
-}
+Entity::~Entity() {}
 Position Entity::getPosition()
 {
 	Position _pos;
@@ -42,7 +36,6 @@ Position Entity::getPosition()
 }
 void Entity::setPosition(Position _pos)
 {
-	efout << "setPosition(" << _pos.getX() << ", " << _pos.getY() << ")\n";
 	position.from(_pos);
 }
 
@@ -74,13 +67,12 @@ void Entity::move(Direction dir)
 	switch(dir)
 	{
 		case DIR_UP: case DIR_DOWN: case DIR_LEFT: case DIR_RIGHT:
-			efout << "move(" << dir << ")\n";
 			bool success = false;
 			Position newPosition = getPossibleMovePosition(getPosition(), dir, success);
 			if (success)
 			{
 				//moveChar(newPosition);
-				setPosition(newPosition);
+				position.from(newPosition);
 			}
 			break;
 		

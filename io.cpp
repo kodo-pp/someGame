@@ -22,9 +22,6 @@ void onIoInit()
 	initscr();
 	start_color();
 	initColorPairs();
-	noecho();
-	curs_set(0);
-	keypad(stdscr, true);
 }
 
 void putCharAt(int ch, Position pos)
@@ -40,9 +37,6 @@ void swapBuffers()
 
 void onIoExit()
 {
-	echo();
-	curs_set(1);
-	keypad(stdscr, false);
 	endwin();
 }
 

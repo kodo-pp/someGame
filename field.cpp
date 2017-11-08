@@ -2,7 +2,7 @@
 
 // TODO: Field::, move code to field.hpp (https://stackoverflow.com/questions/495021/why-can-templates-only-be-implemented-in-the-header-file)
 // And, traditionally, TODO: fix this shit
-/*
+
 
 Field::Field(int _w, int _h)
 {
@@ -71,7 +71,7 @@ int getW()
 int getH()
 {
 	return height;
-}*/
+}
 
 Field <char> wallField(80, 24);
 
