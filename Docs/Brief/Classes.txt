@@ -1,0 +1,22 @@
+Docs/Brief/Classes.txt - Иерархия классов
+
+Entity - Абстрактный игровой объект
+	HumanEntity - Объект, управляемый игроком (пресонаж)
+		Bomber - см. Docs/Characters/Bomber.txt
+		Wizard - см. Docs/Characters/Wizard.txt
+	AIEntity - Объект, управляемый искуственным интеллектом
+		Eater - см. Docs/Enemies/Eater.txt
+		Destroyer - см. Docs/Enemies/Destroyer.txt
+		Grenade - Брошенная граната, см. Docs/Weapons/Grenade.txt
+		Fireball - Летящий огненный шар, см. Docs/Weapons/Fireball.txt
+	StaticEntity - Объект, подчиняющийся только игровым законам физики ничем не управляется)
+		Box - Простая коробка, см. Docs/StaticEntities/Box/Box.txt
+			ExplosiveBox - Коробка с бомбой, см. Docs/StaticEntities/Box/ExplosiveBox.txt
+			BatteryBox - Коробка с запасом энергии, см. Docs/StaticEntities/Box/BatteryBox.txt
+			FrozenBox - Ледяная коробка, см. Docs/StaticEntities/Box/ExplosiveBox.txt
+		Treasure - Клад, см. Docs/StaticEntities/Treasure.txt
+		Mine - Мина, см. Docs/Weapons/Mine.txt
+
+Position - Класс контейнера, содержащего координаты заданной точки (X и Y), см. Docs/Misc/Position.txt
+
+Версия документации 1.0
