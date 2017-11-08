@@ -1,9 +1,20 @@
-CXXIFLAGS=-I/usr/include/ncursesw       # Флаги включений заголовков
-CXXLFLAGS=-lncursesw                    # Флаги подключения библиотек
-CXXAFLAGS=-O2 -Wall -std=gnu++11	# Дополнительные флаги
-CXXLDAFLAGS=				# Дополнительные флаги для линковщика
-CXXLDFLAGS=$(CXXLFLAGS) $(CXXLDAFLAGS)  # Все флаги для линковщика
-CXXFLAGS=$(CXXIFLAGS) $(CXXAFLAGS)      # Все флаги для компилятора (без линковки)
+CXXIFLAGS=-I/usr/include/ncursesw
+# Флаги включений заголовков
+
+CXXLFLAGS=-lncursesw
+# Флаги подключения библиотек
+
+CXXAFLAGS=-O2 -Wall -std=gnu++11
+# Дополнительные флаги
+
+CXXLDAFLAGS=
+# Дополнительные флаги для линковщика
+
+CXXLDFLAGS=$(CXXLFLAGS) $(CXXLDAFLAGS)
+# Все флаги для линковщика
+
+CXXFLAGS=$(CXXIFLAGS) $(CXXAFLAGS)
+# Все флаги для компилятора (без линковки)
 
 .PHONY: all run clean ee
 # all   - Выполнить сборку, но не заппускать
