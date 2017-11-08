@@ -5,6 +5,8 @@
 #include "entity.hpp"
 #include "field.hpp"
 
+#include <fstream>
+
 using namespace std;
 int main()
 {/*
@@ -33,6 +35,34 @@ int main()
 			putCharAt(wf->getAt(pos), pos);
 		}
 	}
+	Entity ent('p' | getColor(COLPR_MY_PLAYER));
+	Position pos(2, 5);
+	ent.setPosition(pos);
+	ent.display();
+	
+	ofstream fout("log.log");
+	
+	while (true)
+	{
+		int ch = getch();
+		switch(ch)
+		{
+			case KEY_LEFT:
+				fout << "left_key\n";
+				ent.move(DIR_LEFT);
+				break;
+			case KEY_RIGHT:
+				fout << "right_key\n";
+				ent.move(DIR_RIGHT);
+				break;
+			case ' ':
+				onIoExit();
+				return 0;
+		}
+		ent.display();
+		swapBuffers();
+	}
+	fout.close();
 	swapBuffers();
 	getch();
 	onIoExit();
