@@ -1,5 +1,8 @@
 #include "move.hpp"
 #include <iostream>
+
+using namespace std;
+
 Position getPossibleMovePosition(Position p, Direction d, bool& success)
 {
 	// std::cerr << "getPossibleMove(" << p.getX() << ", " << p.getY() << "; " << d << ")\n";
@@ -57,9 +60,19 @@ Position getPossibleMovePosition(Position p, Direction d, bool& success)
 			Position np(x + 1, y);
 			if (f->getAt(np) != '#') // TODO: entities
 			{
-				 // TODO: more complex check
-				 success = true;
-				 return np;
+				// DONE: more complex check
+				success = true;
+				
+				for (int fallY = y; fallY < f->getH(); ++fallY)
+				{
+					np.setY(fallY);
+					if (f->getAt(np) != ' ')
+					{
+						np.setY(max(fallY - 1, y));
+						break;
+					}
+				}
+				return np;
 			}
 			else
 			{
@@ -78,9 +91,19 @@ Position getPossibleMovePosition(Position p, Direction d, bool& success)
 			Position np(x - 1, y);
 			if (f->getAt(np) != '#') // TODO: entities
 			{
-				 // TODO: more complex check
-				 success = true;
-				 return np;
+				// DONE: more complex check
+				success = true;
+				 
+				for (int fallY = y; fallY < f->getH(); ++fallY)
+				{
+					np.setY(fallY);
+					if (f->getAt(np) != ' ')
+					{
+						np.setY(max(fallY - 1, y));
+						break;
+					}
+				}
+				return np;
 			}
 			else
 			{

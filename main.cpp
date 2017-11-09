@@ -41,7 +41,7 @@ int main()
 		for (int y = 0; y < 24; ++y)
 		{
 			Position pos(x, y);
-			wf->setAt(((y == 5 || y == 3 || y == 2 || y == 10) ? (' ') : ('#')), pos);
+			wf->setAt(((y == 5 || y == 3 || y == 2 || y == 10 || (y == 4 && x < 30)) ? (' ') : ('#')), pos);
 			
 			putCharAt(wf->getAt(pos), pos);
 		}
