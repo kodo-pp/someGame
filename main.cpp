@@ -4,12 +4,35 @@
 #include <unistd.h>
 #include "entity.hpp"
 #include "field.hpp"
+#include <sys/time.h>
+#include <signal.h>
 
 #include <fstream>
 
 using namespace std;
+
+
+bool in = true;
+
+void onSigAlrm(int sig)
+{
+	in = true;
+}
+
+
 int main()
 {
+	signal(SIGALRM, onSigAlrm);
+	struct itimerval iv;
+	struct timeval tvc, tvn;
+	tvc.tv_sec = 0;
+	tvc.tv_usec = 1000 * 150;
+	tvn.tv_sec = 0;
+	tvn.tv_usec = 1000 * 150;
+	iv.it_interval = tvn;
+	iv.it_value = tvc;
+	setitimer(ITIMER_REAL, &iv, NULL);
+	
 	onIoInit();
 	Field <char> * wf = getWallField();
 	
@@ -42,6 +65,11 @@ int main()
 	while (true)
 	{
 		int ch = getch();
+		if (!in)
+		{
+			continue;
+		}
+		in = false;
 		switch(ch)
 		{
 			case KEY_LEFT:
