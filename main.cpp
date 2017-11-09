@@ -9,20 +9,7 @@
 
 using namespace std;
 int main()
-{/*
-	onIoInit();
-	
-	Entity ent('p' | A_BOLD | getColor(COLPR_ENEMY));
-	Position pos(4, 7);
-	ent.setPosition(pos);
-	Position pos1;
-	pos1.from(ent.getPosition());
-	
-	ent.display();
-	swapBuffers();
-	getch();
-	onIoExit();
-	*/
+{
 	onIoInit();
 	Field <char> * wf = getWallField();
 	
@@ -31,16 +18,26 @@ int main()
 		for (int y = 0; y < 24; ++y)
 		{
 			Position pos(x, y);
-			wf->setAt(((y == 5) ? (' ') : ('#')), pos);
+			wf->setAt(((y == 5 || y == 3 || y == 2 || y == 10) ? (' ') : ('#')), pos);
+			
 			putCharAt(wf->getAt(pos), pos);
 		}
 	}
+	
+	wf->setAt('#', Position(60, 5));
+	putCharAt('#', Position(60, 5));
+	
+	for (int y = 2; y < 13; ++y)
+	{
+		Position pos(73, y);
+		wf->setAt('=', pos);
+		putCharAt('=', pos);
+	}
+	
 	Entity ent('p' | getColor(COLPR_MY_PLAYER));
-	Position pos(2, 5);
+	Position pos(70, 5);
 	ent.setPosition(pos);
 	ent.display();
-	
-	ofstream fout("log.log");
 	
 	while (true)
 	{
@@ -48,21 +45,24 @@ int main()
 		switch(ch)
 		{
 			case KEY_LEFT:
-				fout << "left_key\n";
 				ent.move(DIR_LEFT);
 				break;
 			case KEY_RIGHT:
-				fout << "right_key\n";
 				ent.move(DIR_RIGHT);
 				break;
-			case ' ':
+			case KEY_DOWN:
+				ent.move(DIR_DOWN);
+				break;
+			case KEY_UP:
+				ent.move(DIR_UP);
+				break;
+			case ' ': case 'q': 
 				onIoExit();
 				return 0;
 		}
 		ent.display();
 		swapBuffers();
 	}
-	fout.close();
 	swapBuffers();
 	getch();
 	onIoExit();
