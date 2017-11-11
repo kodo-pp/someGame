@@ -1,4 +1,4 @@
-CXXIFLAGS=-I/usr/include/ncursesw
+CXXIFLAGS=-I/usr/include/ncursesw -Iinclude
 # Флаги включений заголовков
 
 CXXLFLAGS=-lncursesw
@@ -16,6 +16,13 @@ CXXLDFLAGS=$(CXXLFLAGS) $(CXXLDAFLAGS)
 CXXFLAGS+=$(CXXIFLAGS) $(CXXAFLAGS)
 # Все флаги для компилятора (без линковки)
 
+OBJECTS:=$(shell find src/*.cpp | sed 's/\.cpp/.o/g')
+# Объектные файлы, используемые в проекте
+
+EXECNAME?=main
+# Имя исполняемого файла после сборки
+# Внимание: во избежание «замусоривания» необходимо выполнить `make clean´
+# перед изменением этого значения
 
 .PHONY: all run clean ee
 # all   - Выполнить сборку, но не заппускать
@@ -23,13 +30,14 @@ CXXFLAGS+=$(CXXIFLAGS) $(CXXAFLAGS)
 # clean - Удалить исполняемые и объектные файлы
 # ee    - Равносильно make clean && make run
 
-all: main
+all: $(EXECNAME)
 
-main: main.o entity.o io.o move.o field.o
-	$(CXX) main.o entity.o io.o move.o field.o $(CXXLDFLAGS) -o main
-	strip --strip-all main
-run: main
-	./main || true
+$(EXECNAME): $(OBJECTS)
+	$(CXX) $(OBJECTS) $(CXXLDFLAGS) -o $(EXECNAME)
+	strip --strip-all $(EXECNAME)
+	if ! ls -F "$(EXECNAME)" | grep '[*]' >/dev/null ; then chmod +x "$(EXECNAME)" ; fi
+run: $(EXECNAME)
+	./$(EXECNAME) || true
 clean:
-	rm main *.o || true
+	rm $(EXECNAME) src/*.o || true
 ee: clean run
