@@ -4,25 +4,6 @@
 #include "io.hpp"
 #include <fstream>
 
-/*
-class Entity
-{
-	public:
-		virtual Entity();
-		virtual ~Entity();
-		Position getPosition();
-		MoveState move(Direction);
-		virtual void display();
-		virtual void hit(Direction)
-	protected:
-		void setDisplayChar(int);
-		int getDisplayChar();
-		virtual void clear();
-		Position position;
-		int displayChar;
-};
-*/
-
 Entity::Entity(int _displayChar)
 {
 	setDisplayChar(_displayChar);
