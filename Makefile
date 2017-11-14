@@ -25,7 +25,8 @@ CXXFLAGS=$(CXXIFLAGS) $(CXXAFLAGS)
 all: main
 main: main.o entity.o io.o move.o field.o
 	g++ main.o entity.o io.o move.o field.o $(CXXLDFLAGS) -o main
-	strip --strip-debug main # Немного уменьшим размер исполняемого файла
+	# Немного уменьшим размер исполняемого файла
+	strip --strip-all main
 main.o: main.cpp
 	g++ main.cpp $(CXXFLAGS) -c -o main.o
 entity.o: entity.cpp

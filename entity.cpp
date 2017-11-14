@@ -2,32 +2,16 @@
 #include "move.hpp"
 #include "field.hpp"
 #include "io.hpp"
-
-/*
-class Entity
-{
-	public:
-		virtual Entity();
-		virtual ~Entity();
-		Position getPosition();
-		MoveState move(Direction);
-		virtual void display();
-		virtual void hit(Direction)
-	protected:
-		void setDisplayChar(int);
-		int getDisplayChar();
-		virtual void clear();
-		Position position;
-		int displayChar;
-};
-*/
+#include <fstream>
 
 Entity::Entity(int _displayChar)
 {
 	setDisplayChar(_displayChar);
 	position.setXY(0, 0);
 }
-Entity::~Entity() {}
+Entity::~Entity()
+{
+}
 Position Entity::getPosition()
 {
 	Position _pos;
@@ -49,7 +33,13 @@ void Entity::hit(Direction dir)
 
 void Entity::clear()
 {
-	putCharAt(CLEAR_CHAR, getPosition());
+	Field <char> * wf = getWallField();
+	if (wf == nullptr)
+	{
+		return;
+	}
+	
+	putCharAt(wf->getAt(getPosition()), getPosition());
 }
 void Entity::setDisplayChar(int _displayChar)
 {
@@ -71,8 +61,9 @@ void Entity::move(Direction dir)
 			Position newPosition = getPossibleMovePosition(getPosition(), dir, success);
 			if (success)
 			{
-				//moveChar(newPosition);
-				position.from(newPosition);
+				clear();
+				setPosition(newPosition);
+				display();
 			}
 			break;
 		
