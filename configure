@@ -1,0 +1,77 @@
+#!/bin/bash
+
+show_help()
+{
+	echo "Usage: $0 [--help] [--prefix=PREFIX] [--ncurses-include-path=INCLUDEPATH] [--ncurses-link-library=LIBRARY] [--execname=NAME]"
+	echo "Example: $0 --prefix=\"\$HOME/opt/somegame\" --ncurses-include-path=/home/user22/shared/includes --ncurses-link-library=ncursesw --execname=game"
+	exit 0
+}
+
+prefix=/usr/local/games/
+execname=game
+ncurses_include_path=/usr/include/ncursesw
+ncurses_link_library=ncursesw
+
+# Parse args
+
+while ! [ -z "$1" ]; do
+	case $1 in
+		--help)
+			show_help
+			exit 0
+			;;
+		--prefix=*)
+			prefix=`echo $1 | sed 's/^--prefix\=//g'`
+			;;
+		--ncurses-include-path=*)
+			ncurses_include_path=`echo $1 | sed 's/^--ncurses-include-path\=//g'`
+			;;
+		--ncurses-link-library=*)
+			ncurses_link_library=`echo $1 | sed 's/^--ncurses-link-library\=//g'`
+			;;
+		--execname=*)
+			execname=`echo $1 | sed 's/^--execname\=//g'`
+			;;
+		*)
+			echo "Unknown parameter $1"
+			echo "See $0 --help"
+			exit 1
+			;;
+	esac
+	shift
+done
+
+echo "Configuration:"
+echo "    prefix                = $prefix"
+echo "    ncurses_include_path  = $ncurses_include_path"
+echo "    ncurses_link_library  = $ncurses_link_library"
+echo "    execname              = $execname"
+echo -n "Proceed with this config? [y/n]: "
+read ans
+
+case $ans in
+	Y|y|yes|Yes|YES)
+		true
+		;;
+	*)
+		echo 'Aborting, no files changed'
+		exit 2
+		;;
+esac
+
+
+echo 'Generating Makefile from makefile.raw...'
+cat makefile.raw | sed -e "s|\\*\\*\\*SUBST_PREFIX\\*\\*\\*|$prefix|g" \
+                       -e "s|\\*\\*\\*SUBST_EXECNAME\\*\\*\\*|$execname|g" \
+                       -e "s|\\*\\*\\*SUBST_NCURSES_INCLUDE_PATH\\*\\*\\*|$ncurses_include_path|g" \
+                       -e "s|\\*\\*\\*SUBST_NCURSES_LINK_LIBRARY\\*\\*\\*|$ncurses_link_library|g" \
+                       > Makefile
+ret=$?
+if [ $ret == 0 ]; then
+	echo 'Successfully created Makefile, done configuring'
+	exit 0
+else
+	echo 'Failed to create Makefile'
+	exit 4
+fi
+

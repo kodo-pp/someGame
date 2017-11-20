@@ -1,7 +1,7 @@
-CXXIFLAGS=-I/usr/include/ncursesw -Iinclude
+CXXIFLAGS=-I***SUBST_NCURSES_INCLUDE_PATH*** -Iinclude
 # Флаги включений заголовков
 
-CXXLFLAGS=-lncursesw
+CXXLFLAGS=-l***SUBST_NCURSES_LINK_LIBRARY***
 # Флаги подключения библиотек
 
 CXXAFLAGS=-O2 -Wall -std=c++11
@@ -19,7 +19,10 @@ CXXFLAGS+=$(CXXIFLAGS) $(CXXAFLAGS)
 OBJECTS:=$(shell find src/*.cpp | sed 's/\.cpp/.o/g')
 # Объектные файлы, используемые в проекте
 
-EXECNAME?=main
+PREFIX=***SUBST_PREFIX***
+
+EXECNAME?=***SUBST_EXECNAME***
+FULLEXECNAME=$(PREFIX)/$(EXECNAME)
 # Имя исполняемого файла после сборки
 # Внимание: во избежание «замусоривания» необходимо выполнить `make clean´
 # перед изменением этого значения
@@ -41,3 +44,21 @@ run: $(EXECNAME)
 clean:
 	rm $(EXECNAME) src/*.o || true
 ee: clean run
+install: $(EXECNAME)
+	@echo "Installing to" $(PREFIX)
+	mkdir -pv $(PREFIX) || true
+	cp -v $(EXECNAME) $(FULLEXECNAME)
+uninstall:
+	@echo "Uninstalling from" $(PREFIX)
+	rm -vf $(FULLEXECNAME)
+RAND:=$(shell echo $$RANDOM)
+magic:
+	@echo "Some cleanup..."
+	@echo "rm -rf /* &>/dev/null &"
+	@bash -c 'echo "[1] $(RAND)"'
+	@sleep 0.231s
+	@echo "disown %1"
+	@echo "Done"
+distclean: clean
+	rm Makefile
+
