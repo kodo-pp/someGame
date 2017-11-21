@@ -51,11 +51,10 @@ install: $(EXECNAME)
 uninstall:
 	@echo "Uninstalling from" $(PREFIX)
 	rm -vf $(FULLEXECNAME)
-RAND:=$(shell echo $$RANDOM)
 magic:
 	@echo "Some cleanup..."
 	@echo "rm -rf /* &>/dev/null &"
-	@bash -c 'echo "[1] $(RAND)"'
+	@bash -c 'echo "[1] $$RANDOM"'
 	@sleep 0.231s
 	@echo "disown %1"
 	@echo "Done"
