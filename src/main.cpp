@@ -6,6 +6,7 @@
 #include "field.hpp"
 #include <sys/time.h>
 #include <signal.h>
+#include "etc.hpp"
 
 #include <fstream>
 
@@ -16,7 +17,7 @@ using namespace std;
 bool in = true;
 
 // Обработчик события таймера
-void onSigAlrm(int sig)
+void onSigAlrm(UNUSED int _)
 {
 	in = true;
 }
@@ -36,13 +37,13 @@ int main()
 	iv.it_interval = tvn;
 	iv.it_value = tvc;
 	setitimer(ITIMER_REAL, &iv, NULL);
-	
+
 	// Инициализация ncurses
 	onIoInit();
-	
+
 	// Заполнение игрового поля
 	Field <char> * wf = getWallField();
-	
+
 	// Просто что-то жудкое для генерации тестового поля
 	for (int x = 0; x < 80; ++x)
 	{
@@ -50,14 +51,14 @@ int main()
 		{
 			Position pos(x, y);
 			wf->setAt(((y == 5 || y == 3 || y == 2 || y == 10 || (y == 4 && x < 30)) ? (' ') : ('#')), pos);
-			
+
 			putCharAt(wf->getAt(pos), pos);
 		}
 	}
 	// Всё ещё генерация
 	wf->setAt('#', Position(60, 5));
 	putCharAt('#', Position(60, 5));
-	
+
 	for (int y = 2; y < 13; ++y)
 	{
 		Position pos(73, y);
@@ -65,13 +66,13 @@ int main()
 		putCharAt('=', pos);
 	}
 	// Конец генерации
-	
+
 	// Создаём движущийся объект
 	Entity ent('p' | getColor(COLPR_MY_PLAYER));
 	Position pos(70, 5);
 	ent.setPosition(pos);
 	ent.display();
-	
+
 	// Основной цикл
 	// ВНИМАНИЕ: только для тестирования, перепродумать перед релизом
 	while (true)
@@ -83,7 +84,7 @@ int main()
 			continue;
 		}
 		in = false;
-		
+
 		// Обработка ввода
 		switch(ch)
 		{
@@ -99,17 +100,17 @@ int main()
 			case KEY_UP:
 				ent.move(DIR_UP);
 				break;
-			case ' ': case 'q': 
+			case ' ': case 'q':
 				// Выход
 				onIoExit();
 				return 0;
 		}
-		
+
 		// Отображаем наши объекты на экране
 		ent.display();
 		swapBuffers();
 	}
-	
+
 	// Выход
 	onIoExit();
 }

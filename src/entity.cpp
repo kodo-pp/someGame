@@ -2,6 +2,7 @@
 #include "move.hpp"
 #include "field.hpp"
 #include "io.hpp"
+#include "etc.hpp"
 #include <fstream>
 
 Entity::Entity(int _displayChar)
@@ -28,7 +29,7 @@ void Entity::display()
 	putCharAt(getDisplayChar(), getPosition());
 }
 
-void Entity::hit(Direction dir)
+void Entity::hit(UNUSED Direction dir)
 {}
 
 void Entity::clear()
@@ -38,7 +39,7 @@ void Entity::clear()
 	{
 		return;
 	}
-	
+
 	putCharAt(wf->getAt(getPosition()), getPosition());
 }
 void Entity::setDisplayChar(int _displayChar)
@@ -66,7 +67,6 @@ void Entity::move(Direction dir)
 				display();
 			}
 			break;
-		
+
 	}
 }
-

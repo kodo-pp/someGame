@@ -4,7 +4,7 @@ CXXIFLAGS=-I/usr/include/ncursesw -Iinclude
 CXXLFLAGS=-lncursesw
 # Флаги подключения библиотек
 
-CXXAFLAGS=-O2 -Wall -std=c++11
+CXXAFLAGS=-O2 -Wall -Wextra -pedantic -std=c++11
 # Дополнительные флаги
 
 CXXLDAFLAGS=
